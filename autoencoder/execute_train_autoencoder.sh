@@ -2,7 +2,7 @@
 #SBATCH --job-name=train_autoencoder
 #SBATCH --time=10:00:00
 #SBATCH --output=autoencoder_script/%j.log
-#SBATCH --partition=gpu
+#SBATCH --partition=accel
 #SBATCH --gpus=a100:1   
 
 window=$1
