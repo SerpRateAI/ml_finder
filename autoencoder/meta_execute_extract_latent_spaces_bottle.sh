@@ -9,6 +9,6 @@ rate=$5
 batch=$6
 
 
-for i in {1..8}; do 
-    sbatch execute_extract_latent_spaces.sh "$window" "$threshold" "$epochs" "$weight" "$rate" "$batch" "$i"
+for bottle in {1..8}; do 
+    sbatch execute_extract_latent_spaces.sh "$window" "$threshold" "$epochs" "$weight" "$rate" "$batch" "$bottle"
 done
