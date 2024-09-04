@@ -97,8 +97,8 @@ print(f'Printing Length of Filtered dataset {len(connect_bin_slice_list)}')
 connect_power_slice_list = []
 current_time = start_time
 for bool in connect_mask:
+    next_time = current_time + time_delta
     if bool:
-        next_time = current_time + time_delta
         if next_time > end_time:
             next_time = end_time
         filename_in = f"whole_deployment_daily_geo_spectrograms_{station}_{suffix_spec}.h5"
