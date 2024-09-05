@@ -11,6 +11,6 @@ perplexity=$7
 station=$8
 
 
-for i in {1..8}; do 
-    sbatch execute_interactive_tsne.sh "$window" "$threshold" "$epochs" "$weight" "$rate" "$batch" "$perplexity" "$station" "$i"
+for bottle in {1..8}; do 
+    sbatch execute_interactive_tsne.sh "$window" "$threshold" "$epochs" "$weight" "$rate" "$batch" "$perplexity" "$station" "$bottle"
 done
