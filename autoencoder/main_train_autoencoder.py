@@ -132,7 +132,7 @@ class WeightedBinaryCrossEntropyLoss(nn.Module):
 pos_weight = weight # penalty weight for false negatives
 neg_weight = 1.0   # Penalty weight for false positives
 biased_criterion = WeightedBinaryCrossEntropyLoss(pos_weight=pos_weight, neg_weight=neg_weight)
-unbiased_criterion = WeightedBinaryCrossEntropyLoss(pos_weight=pos_weight, neg_weight=neg_weight)
+unbiased_criterion = WeightedBinaryCrossEntropyLoss(pos_weight=1, neg_weight=1)
 
 # Initialize model and optimizer
 model = ConvAutoencoder().to(device)
