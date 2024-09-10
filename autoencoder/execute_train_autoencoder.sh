@@ -1,11 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=plot_all_job
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=32
-#SBATCH --mem=64G
-#SBATCH --account=ec332
+#SBATCH --job-name=train_autoencoder
 #SBATCH --time=10:00:00
 #SBATCH --output=autoencoder_script/%j.log
+#SBATCH --partition=accel
+#SBATCH --gpus=a100:1   
 
 window=$1
 threshold=$2
