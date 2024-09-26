@@ -1,11 +1,12 @@
 #!/bin/bash
 #SBATCH --job-name=sam_extract_latent
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=32
-#SBATCH --mem=64G
-#SBATCH --account=ec332
 #SBATCH --time=3:00:00
 #SBATCH --output=autoencoder_script/%j.log
+#SBATCH --gpus=a100:1
+#SBATCH --mem=64GB
+#SBATCH --partition=accel
+#SBATCH --account=ec332
 
 window=$1
 threshold=$2

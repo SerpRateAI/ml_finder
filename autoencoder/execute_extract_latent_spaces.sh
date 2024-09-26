@@ -13,6 +13,7 @@ epochs=$3
 weight=$4
 rate=$5
 batch=$6
+bottle=$7
 
 echo $window
 echo $threshold
@@ -23,4 +24,4 @@ echo $batch
 
 source /fp/homes01/u01/ec-benm/SerpRateAI/MicroquakesEnv/bin/activate
 
-python main_extract_latent_spaces.py  "$window" "$threshold" "$epochs" "$weight" "$rate" "$batch"
+python main_extract_latent_spaces.py  "$window" "$threshold" "$epochs" "$weight" "$rate" "$batch" "$bottle"
