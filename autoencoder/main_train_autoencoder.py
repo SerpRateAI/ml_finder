@@ -152,7 +152,6 @@ plt.close()
 # Save Model
 model_save_path = f'/fp/projects01/ec332/data/models/file_no_res_{window}_{threshold}_model_{num_epochs}_{pos_weight}_{learning_rate}_{batch_size}_{bottle_filters}.pth'
 torch.save(model.state_dict(), model_save_path)
-
 # # Find loss for validation data
 #model.eval()
 #for epoch in range(num_epochs):
@@ -166,6 +165,5 @@ torch.save(model.state_dict(), model_save_path)
 #    avg_loss = epoch_loss / len(val_dataloader)
 #    val_loss_list.append(avg_loss)
 #print("Validation Complete")
-
 #np.savez(f"model_loss/file_no_res_gpu_{window}_{threshold}_model_{num_epochs}_{pos_weight}_{learning_rate}_{batch_size}_{bottle_filters}.npz", train_loss=np.array(train_loss_list), val_loss= np.array(val_loss_list))
 print('finished')

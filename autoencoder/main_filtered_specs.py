@@ -84,38 +84,21 @@ def compute_mean_connectivity_idx(skeleton):
     neighbors_maps = np.array(neighbors_maps)
     return neighbors_maps
 
-if threshold != 0:
-    # Filter Binary Spectrograms
-    neighbors_maps = compute_mean_connectivity_idx(bin_slice_list)
-    connect_list = []
-    for map in neighbors_maps:
-        connect_list.append(np.sum(map))
-    connect_mask = np.array(connect_list) > threshold
-    connect_bin_slice_list = np.array(bin_slice_list)[connect_mask]
-    print(f'Printing Length of Filtered dataset {len(connect_bin_slice_list)}')
-    
-    # Grab Full Power Spectrograms Corresponding to High Connectivity
-    connect_power_slice_list = []
-    current_time = start_time
-    for bool in connect_mask:
-        next_time = current_time + time_delta
-        if bool:
-            if next_time > end_time:
-                next_time = end_time
-            filename_in = f"whole_deployment_daily_geo_spectrograms_{station}_{suffix_spec}.h5"
-            inpath = join(indir, filename_in)
-            power_spec_slice = read_geo_spectrograms(inpath, starttime =  str(current_time), endtime = str(next_time),  min_freq = min_freq, max_freq = max_freq)
-            power_spec_slice = power_spec_slice.get_total_power()
-            connect_power_slice_list.append(power_spec_slice)
-        current_time = next_time
-    connect_power_slice_list = np.array(connect_power_slice_list)
-    
-if threshold == 0:
-    connect_bin_slice_list = np.array(bin_slice_list)
-    current_time = start_time
-    connect_power_slice_list = []
-    while current_time < end_time:
-        next_time = current_time + time_delta
+# Filter Binary Spectrograms
+neighbors_maps = compute_mean_connectivity_idx(bin_slice_list)
+connect_list = []
+for map in neighbors_maps:
+    connect_list.append(np.sum(map))
+connect_mask = np.array(connect_list) > threshold
+connect_bin_slice_list = np.array(bin_slice_list)[connect_mask]
+print(f'Printing Length of Filtered dataset {len(connect_bin_slice_list)}')
+
+# Grab Full Power Spectrograms Corresponding to High Connectivity
+connect_power_slice_list = []
+current_time = start_time
+for bool in connect_mask:
+    next_time = current_time + time_delta
+    if bool:
         if next_time > end_time:
             break # Break loop if end time is exceeded
         filename_in = f"whole_deployment_daily_geo_spectrograms_{station}_{suffix_spec}.h5"
@@ -128,6 +111,8 @@ if threshold == 0:
     connect_power_slice_list = np.array(connect_power_slice_list)
 
 # Save Spectrograms 
+<<<<<<< HEAD
 np.savez(f"/fp/projects01/ec332/data/altered_spectrograms/bin_spec_{window}_{threshold}.npz", spectrograms=connect_bin_slice_list)
-np.savez(f"/fp/projects01/ec332/data/altered_spectrograms/power_spec_{station}_{window}_{threshold}.npz", spectrograms = connect_power_slice_list)
+np.savez(f"/fp/projects01/ec332/data/altered_spectrograms/power_spec_{window}_{threshold}.npz",spectrograms=connect_power_slice_list)
+
 print("Spectrograms saved")

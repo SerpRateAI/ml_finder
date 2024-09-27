@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=plot_all_job
+#SBATCH --job-name=train_autoencoder
 #SBATCH --ntasks=1
 #SBATCH --time=3:00:00
 #SBATCH --output=autoencoder_script/%j.log
