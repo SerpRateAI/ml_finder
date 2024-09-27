@@ -100,16 +100,19 @@ for bool in connect_mask:
     next_time = current_time + time_delta
     if bool:
         if next_time > end_time:
-            next_time = end_time
+            break # Break loop if end time is exceeded
         filename_in = f"whole_deployment_daily_geo_spectrograms_{station}_{suffix_spec}.h5"
         inpath = join(indir, filename_in)
         power_spec_slice = read_geo_spectrograms(inpath, starttime =  str(current_time), endtime = str(next_time),  min_freq = min_freq, max_freq = max_freq)
         power_spec_slice = power_spec_slice.get_total_power()
-        current_time = next_time
         connect_power_slice_list.append(power_spec_slice)
-connect_power_slice_list = np.array(connect_power_slice_list)
+        current_time = next_time
+    
+    connect_power_slice_list = np.array(connect_power_slice_list)
 
 # Save Spectrograms 
-np.savez(f"spectrograms/bin_spec_{window}_{threshold}.npz", spectrograms=connect_bin_slice_list)
-np.savez(f"spectrograms/power_spec_{station}_{window}_{threshold}.npz", spectrograms = connect_power_slice_list)
+<<<<<<< HEAD
+np.savez(f"/fp/projects01/ec332/data/altered_spectrograms/bin_spec_{window}_{threshold}.npz", spectrograms=connect_bin_slice_list)
+np.savez(f"/fp/projects01/ec332/data/altered_spectrograms/power_spec_{window}_{threshold}.npz",spectrograms=connect_power_slice_list)
+
 print("Spectrograms saved")
