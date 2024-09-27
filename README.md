@@ -1,4 +1,4 @@
-# Unsurperised Signal Classifcation
+# Unsuperised Signal Classifcation
 
 Geophone arrays in the Oman region yeilded a zoo of spectrogram signals. This repository contains methods for splitting these signals into classes.
 
