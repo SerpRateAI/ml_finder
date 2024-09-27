@@ -1,34 +1,65 @@
 # Unsupervised Signal Classification
 
-Geophone arrays in the Oman region yeilded a zoo of spectrogram signals. This repository contains methods for splitting these signals into classes.
+This repository contains methods for classifying spectrogram signals collected from geophone arrays in the Oman region. The geophone data has resulted in a wide variety of signal types, or a "zoo" of spectrograms, and we aim to categorize these signals using unsupervised clustering methods.
 
-## Rules Based Model Example
+## Rules-Based Model Example
 
-The rules based model is so far the most effective clustering models, to run make sure to clone this directory, have access to the Fox Supercluster, and follow the instructions below.
+The rules-based model has proven to be the most effective clustering approach so far. To run the model, follow the steps below. Ensure that you have cloned this repository, have access to the Fox Supercluster, and meet the necessary environment prerequisites.
 
-First cd into the process_spectrograms folder. Type out the command: 
+### Steps to Run the Model
 
-sbatch execute_filtered_specs.sh A01 72 345             (station number, window size in seconds, activity threshold)
+1. **Navigate to the `process_spectrograms` folder:**
 
-This will load spectrograms from the A01 as well as binary spectrograms into the Fox cluster data. Next enter:
+    ```bash
+    cd process_spectrograms
+    ```
 
-sbatch execute_remove_resonances.sh 72 345              (window size in seconds, activity threshold)
+2. **Load spectrograms:**
+   
+   Run the following command to load the spectrograms and binary spectrograms for the specified station (`A01`), using a given window size and activity threshold:
 
-This will load the removed resonance binary spectrograms to the Fox cluster. Training with stationary resonances removed prevents the model from picking up on the trivial resonance features. Note that there is currently not an option to train the rules based model without this step. 
+    ```bash
+    sbatch execute_filtered_specs.sh A01 72 345
+    ```
+   - `A01`: Station number
+   - `72`: Window size in seconds
+   - `345`: Activity threshold
 
-After removing the resonances, cd .. into the parent directory then cd into the rules_based_model folder. You will then need to enter:
+3. **Remove resonances:**
 
-sbatch execute_rules_based_encode.sh 5             (number of bins)
+   To remove stationary resonance features, run the following command:
 
-This applies slope filters, sums by rows, and collects bins to manually create a lower dimensional space for clustering. Finally enter:
+    ```bash
+    sbatch execute_remove_resonances.sh 72 345
+    ```
 
-sbatch execute_interactive_rules_based_top5.sh 20 40 5 (perplexity, number of classes, number of bins)
+   This step removes resonance features and stores the modified binary spectrograms in the Fox cluster. **Note:** The current version of the rules-based model **requires** this step, and training without removing resonances is not supported.
 
-This will output an interactive tsne plot to the folder: /fp/projects01/ec332/data/cumulative_cluster_plots
-And a cumulative occurence plot of the selected top 5classes: /fp/projects01/ec332/data/tsne_plots/
+4. **Navigate to the `rules_based_model` folder:**
 
-Note that the tsne plot is a large file ~ 100 Mb and may take a while to load.
+    ```bash
+    cd ../rules_based_model
+    ```
 
-## Other Models
+5. **Apply slope filters and binning:**
 
-...
+   To create a lower-dimensional space for clustering, run the following command. It applies slope filters, sums rows, and bins the results manually:
+
+    ```bash
+    sbatch execute_rules_based_encode.sh 5
+    ```
+   - `5`: Number of bins
+
+6. **Generate an interactive t-SNE plot:**
+
+   Finally, run this command to generate an interactive t-SNE plot and a cumulative occurrence plot of the top 5 classes:
+
+    ```bash
+    sbatch execute_interactive_rules_based_top5.sh 20 40 5
+    ```
+   - `20`: Perplexity
+   - `40`: Number of classes
+   - `5`: Number of bins
+
+   - The t-SNE plot will be saved in: `/fp/projects01/ec332/data/tsne_plots/`
+   - The cumulative occurrence plot will be saved in: `/fp/projects01/ec332/data/cumulative_cluster_plots/`
