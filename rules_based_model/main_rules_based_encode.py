@@ -56,18 +56,18 @@ def create_slope_filter(angle, size=slope_filter_size):
                                             np.abs(angle + 180 - deg), np.abs(angle - 180 - deg)))) / 45
     return torch.tensor(filter_tensor, dtype=torch.float32)
 
-def create_horizontal_gradient_filter(size=acceleration_filter_size):
+def create_acceleration_filter(size=acceleration_filter_size):
     '''
-    Create a horizontal gradient filter with negative values on the left 
+    Create an acceleration filter with negative values on the left 
     and positive values on the right, constant across height.
     '''
     gradient = np.linspace(-1, 1, size)
     filter_tensor = np.tile(gradient, (size, 1))
     return torch.tensor(filter_tensor, dtype=torch.float32)
 
-def create_opposite_horizontal_gradient_filter(size=deceleration_filter_size):
+def create_deceleration_filter(size=deceleration_filter_size):
     '''
-    Create a horizontal gradient filter with positive values on the left 
+    Create a deceleration filter with positive values on the left 
     and negative values on the right, constant across height.
     '''
     gradient = np.linspace(1, -1, size)
@@ -117,8 +117,8 @@ conv_layer = nn.Conv2d(in_channels=1, out_channels=len(angles), kernel_size=slop
                        stride=1, padding=slope_padding, bias=False)
 conv_layer.weight = nn.Parameter(conv_filters)
 
-acceleration_filter = create_horizontal_gradient_filter()
-deceleration_filter = create_opposite_horizontal_gradient_filter()
+acceleration_filter = create_acceleration_filter()
+deceleration_filter = create_deceleration_filter()
 
 accel_layer = nn.Conv2d(in_channels=1, out_channels=1, kernel_size=acceleration_filter_size, 
                         stride=1, padding=acceleration_padding, bias=False)
